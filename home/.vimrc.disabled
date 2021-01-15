@@ -1,0 +1,440 @@
+" This file is super old and outdated
+" vim:fdm=marker
+" Set std stuff and install Vim-plug if not present {{{
+set nocompatible
+filetype off
+let mapleader = "\<Space>"
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall
+endif
+" }}}
+
+" **** VIMPlugs *** {{{
+call plug#begin('~/.vim/plugged')
+
+" General {{{
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-abolish'
+" Plug 'reedes/vim-one'
+Plug 'tmhedberg/matchit'
+
+Plug 'matze/vim-move'
+let g:move_key_modifier = 'C'
+
+" UI Plugins
+
+" Theme
+
+" Language support
+
+Plug 'morhetz/gruvbox'
+let g:gruvbox_contrast_dark="soft"
+let g:gruvbox_invert_selection=0
+let g:gruvbox_improved_strings=0
+let g:gruvbox_improved_warnings=0
+let g:gruvbox_italicize_comments=1
+let g:gruvbox_italicize_strings=0
+let g:gruvbox_bold=0
+let g:gruvbox_italic=0
+let g:gruvbox_underline=0
+
+Plug 'editorconfig/editorconfig-vim'
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+
+Plug 'Shougo/vimproc.vim', {'do': 'make'}
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/neomru.vim'
+Plug 'Shougo/neoyank.vim'
+Plug 'tsukkee/unite-help'
+Plug 'Shougo/unite-outline'
+
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-vinegar'
+
+Plug 'rking/ag.vim'
+let g:ag_working_path_mode='r'
+let g:ag_highlight=0
+
+Plug 'schickling/vim-bufonly'
+map <Leader>bo :BufOnly<CR>
+
+Plug 'osyo-manga/vim-over'
+Plug 'godlygeek/tabular'
+Plug 'xolox/vim-misc' | Plug 'xolox/vim-notes'
+let g:notes_directories = ['~/Dropbox/Notes']
+let g:notes_tab_indents = 1
+let g:notes_alt_indents = 0
+" }}}
+
+" Plug 'terryma/vim-multiple-cursors'
+
+" Coding utils {{{
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'w0rp/ale'
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\}
+let g:ale_sign_column_always = 1
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 0
+let g:ale_set_loclist = 1
+let g:ale_set_quickfix = 0
+
+Plug 'Raimondi/delimitMate'
+Plug 'tomtom/tcomment_vim'
+Plug 'luochen1990/rainbow'
+let g:rainbow_active = 1
+
+Plug 'mattn/webapi-vim' | Plug 'mattn/gist-vim'
+
+Plug 'justinmk/vim-matchparenalways'
+Plug 'sjl/clam.vim'
+nnoremap ! :Clam<space>
+vnoremap ! :ClamVisual<space>
+" }}}
+
+" NeoComplete {{{
+Plug 'Shougo/neocomplete.vim'
+" Disable AutoComplPop
+let g:acp_enableAtStartup = 0
+" Use neocomplete
+let g:neocomplete#enable_at_startup = 1
+" Use smart case
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+" hide preview on autocomplete
+set completeopt-=preview
+" close popup on l/r movement keys
+inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
+inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
+" SyntaxComplete
+if has("autocmd") && exists("+omnifunc")
+    autocmd Filetype *
+                \	if &omnifunc == "" |
+                \		setlocal omnifunc=syntaxcomplete#Complete |
+                \	endif
+endif
+" use vimproc
+let g:neocomplete#use_vimproc = 1
+
+Plug 'SirVer/ultisnips'
+" <TAB>: completion.
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+Plug 'hrsh7th/vim-neco-calc'
+" }}}
+
+" Visuals {{{
+Plug 'itchyny/lightline.vim'
+augroup reload_vimrc
+    autocmd!
+    autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
+augroup END
+set noshowmode
+set guioptions-=e
+let g:lightline = {
+            \ 'colorscheme': 'gruvbox',
+            \ 'active': {
+            \   'left': [ [ 'mode', 'paste' ],
+            \             [ 'fugitive', 'filename' ] ]
+            \ },
+            \ 'component_function': {
+            \   'fugitive': 'LightLineFugitive',
+            \   'readonly': 'LightLineReadonly',
+            \   'modified': 'LightLineModified',
+            \   'filename': 'LightLineFilename'
+            \ },
+            \ }
+
+function! LightLineModified()
+    if &filetype == "help"
+        return ""
+    elseif &modified
+        return "+"
+    elseif &modifiable
+        return ""
+    else
+        return ""
+    endif
+endfunction
+
+function! LightLineReadonly()
+    if &filetype == "help"
+        return ""
+    elseif &readonly
+        return ""
+    else
+        return ""
+    endif
+endfunction
+
+function! LightLineFugitive()
+    if exists("*fugitive#head")
+        let _ = fugitive#head()
+        return strlen(_) ? ' '._ : ''
+    endif
+    return ''
+endfunction
+
+function! LightLineFilename()
+    return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+                \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
+                \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+endfunction
+
+Plug 'airblade/vim-gitgutter'
+" }}}
+
+" Web {{{
+Plug 'othree/html5.vim', { 'for': 'html' }
+Plug 'mattn/emmet-vim'
+let g:user_emmet_leader_key='<C-C>'
+
+Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
+let javascript_enable_domhtmlcss=1
+
+" othree setup, in order
+" Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
+" Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+" Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+" let g:used_javascript_libs = 'underscore, jquery, react, flux, chai'
+
+Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+
+Plug 'othree/jsdoc-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'marijnh/tern_for_vim', {'do': 'npm install', 'for': ['javascript', 'javascript.jsx']}
+let g:tern_show_argument_hints='no'
+let g:tern_show_signature_in_pum=0
+let g:tern_map_keys=0
+nmap <leader>td :TernDefTab<CR>
+nmap <leader>tf :TernRefs<CR>
+nmap <leader>tr :TernRename<CR>
+
+Plug 'millermedeiros/vim-esformatter' ", {'do': 'npm install -g esformatter esformatter-jsx', 'for': ['javascript', 'javascript.jsx']}
+map <Leader>es :Esformatter<CR>
+
+Plug 'heavenshell/vim-jsdoc', { 'for': ['javascript', 'javascript.jsx'] }
+let g:jsdoc_allow_input_prompt=1
+let g:jsdoc_access_descriptions=1
+let g:jsdoc_underscore_private=1
+let g:jsdoc_enable_es6=1
+
+Plug 'moll/vim-node', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
+" }}}
+
+" " Misc langs {{{
+" " Clojure/Clojurescript
+" Plug 'guns/vim-clojure-static', {'for': 'clojure'}
+" Plug 'tpope/vim-salve', {'for': 'clojure'}
+" Plug 'tpope/vim-fireplace', {'for': 'clojure'}
+" Plug 'guns/vim-clojure-highlight', {'for': 'clojure'}
+" Plug 'vim-scripts/paredit.vim', {'for': 'clojure'}
+" let g:paredit_smartjump = 1
+" let g:paredit_shortmaps = 0
+" let g:paredit_leader = '\'
+" command! Figwheel :Piggieback! (do (require 'figwheel-sidecar.repl-api) (figwheel-sidecar.repl-api/cljs-repl))
+
+Plug 'rust-lang/rust.vim', {'for': 'rust'}
+Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'vim-pandoc/vim-pandoc'
+let g:pandoc#folding#mode="stacked"
+let g:pandoc#biblio#sources="blg"
+
+Plug 'terryma/vim-expand-region'
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+" }}}
+
+" Typescript
+Plug 'leafgarland/typescript-vim', { 'for': ['typescript']}
+Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript']}
+" Plug 'Quramy/tsuquyomi', { 'for': ['typescript']}
+
+call plug#end()
+" **** VIMPlugs *** }}}
+
+" general stuff {{{
+syntax on
+filetype on
+filetype plugin on
+filetype indent on
+filetype plugin indent on
+set lazyredraw
+set shell=/usr/local/bin/bash
+" set shellcmdflag=-ic
+" highlight all search matches
+set incsearch
+" Make double-<Esc> clear search highlights
+nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
+" hide unused buffers
+set hidden
+" Show matching braces
+set showmatch
+set display+=lastline
+" disable backup
+set nobackup
+if has('writebackup')
+    set nowritebackup
+endif
+set noswapfile
+set cursorline
+set ts=4 sw=4 et
+set t_Co=256
+set scrolloff=2 " Keep 3 lines below and above the cursor
+set visualbell
+set number
+set textwidth=100
+" Don't wrap text
+set nowrap
+" Command history
+set history=1000
+set smarttab
+set cindent
+" Remove annoying F1 help; use :help instead
+noremap <F1> <nop>
+" No man pages because I don't write C or many shell scripts
+noremap K <nop>
+" Shorten a lot of notifications and suppress the splash screen
+set shortmess+=aI
+" Intuitive split locations
+set splitbelow
+set splitright
+" Better redrawing for large files
+set ttyfast
+" Respect vim modelines
+set modeline
+" Use the file's name in the title
+set title
+" Reuse open buffers and tabs
+set switchbuf=useopen,usetab
+" The length of time Vim waits after you stop typing before it triggers the plugin (default is 4000)
+set updatetime=750
+" ESC delay
+set timeoutlen=1000 ttimeoutlen=0
+" Case for searches
+set smartcase
+set ignorecase
+" GUI stuff
+set selectmode=
+set textwidth=160
+if exists('&colorcolumn')
+    set colorcolumn=+1
+endif
+if has("gui_running")
+    set guioptions-=L " disable scrollbars in NerdTree
+    set guioptions-=r " disable scrollbars in editor
+    if has("gui_macvim")
+        " set guifont=Sauce\ Code\ Powerline\ PNFT:h12
+        set guifont=Source\ Code\ Pro\ for\ Powerline:h14
+        let macvim_hig_shift_movement = 1
+    endif
+endif
+" }}}
+
+" my colors/theme {{{
+set background=dark
+colorscheme gruvbox
+" }}}
+
+" my abbreviations {{{
+cab help tab help
+cab h tab help
+" cab e tabe
+" }}}
+
+" format JSON {{{
+com! JSONFormat %!jq --indent 4 .
+map <Leader>js :FormatJSON<CR>
+" }}}
+
+" stuff that works only if after plug-end {{{
+" if !exists('g:airline_symbols')
+"     let g:airline_symbols = {}
+" endif
+" let g:airline_left_sep=""
+" let g:airline_right_sep=""
+" let g:airline_section_z = airline#section#create(['%{ObsessionStatus(''sess-☑ '', ''sess-☐ '')}', 'windowswap', '%3p%% ', 'linenr', ':%3v '])
+
+" Unite config {{{
+let g:unite_source_history_yank_enable = 1
+let g:unite_enable_auto_select = 0
+" Use ag in unite grep source.
+let g:unite_source_grep_command = 'ag'
+let g:unite_source_grep_default_opts = '-i --vimgrep --hidden'
+let g:unite_source_grep_recursive_opt = ''
+" Use ag for rile/rec/async searches
+let g:unite_source_rec_async_command =
+            \ ['ag', '--follow', '--nocolor', '--nogroup',
+            \  '--hidden', '-g', '']
+" Default configuration.
+let default_context = {
+            \ 'vertical' : 0,
+            \ 'short_source_names' : 1,
+            \ 'prompt' : '» ',
+            \ 'winheight': 15,
+            \ }
+call unite#custom#profile('default', 'context', default_context)
+nnoremap <C-p> :<C-u>Unite -default-action=tabopen -start-insert file_rec/async:!<cr>
+nnoremap <leader>uf :<C-u>Unite -default-action=tabopen -start-insert file_rec/async:!<cr>
+nnoremap <leader>uc :<C-u>Unite -default-action=tabopen -start-insert file<cr>
+nnoremap <leader>um :<C-u>Unite -default-action=tabopen -start-insert file_mru<cr>
+nnoremap <leader>uh :<C-u>Unite -default-action=tabopen -start-insert help<cr>
+nnoremap <leader>ug :<C-u>Unite -default-action=tabopen -start-insert grep<cr>
+nnoremap <leader>uo :<C-u>Unite -start-insert outline<cr>
+nnoremap <leader>ub :<C-u>Unite -start-insert buffer<cr>
+nnoremap <leader>uy :<C-u>Unite history/yank<cr>
+autocmd FileType unite imap <buffer> <ESC> <Plug>(unite_exit)
+" }}}
+
+" Loclist and linter
+nmap <Leader>lo :lopen<CR>
+nmap <Leader>lc :lclose<CR>
+nmap <Leader>ln :lnext<CR>
+nmap <Leader>lp :lprevious<CR>
+" Plugins
+nmap <Leader>bl :buffers<CR>
+nmap <Leader>pc :PlugClean<CR>
+nmap <Leader>pi :PlugInstall<CR>
+nmap <Leader>ps :PlugStatus<CR>
+nmap <Leader>pd :PlugDiff<CR>
+nmap <Leader>pu :PlugUpdate<CR>
+nmap <Leader>pg :PlugUpgrade<CR>
+" misc
+nmap <Leader>v :e $MYVIMRC<CR>
+map <Leader>ff mzgg=G`z
+map <Leader>ta :tab sball<CR>
+" spell suggestions in a pop-up please
+nnoremap z= ea<C-X><C-S>
+" toggle spell with F5
+map <F5> :setlocal spell! spelllang=en_us<CR>
+" reselect V block after indent
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <LT>gv
+" indent with tab in normal mode
+nnoremap <Tab> V>gv<Esc>
+nnoremap <S-Tab> V<LT>gv<Esc>
+" quick replay macro on q
+nmap <Leader>q @q
+" }}}
+
+" }}}

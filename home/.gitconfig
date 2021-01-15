@@ -1,0 +1,32 @@
+[user]
+	name = Hrvoje Velić
+	email = hrvelic@gmail.com
+[core]
+	excludesfile = /home/hrvoje/.gitignore_global
+	autocrlf = false
+[push]
+	default = current
+[alias]
+	tags = tag -l
+	branches = branch -a
+;  pull = pull --ff-only
+	revert = reset --hard
+[credential]
+	helper = cache
+; [diff]
+;   guitool =
+; [difftool]
+; 	prompt = false
+; [difftool ""]
+; 	cmd = \"$LOCAL\" \"$REMOTE\"
+; 	path =
+; 	trustExitCode = true
+;   prompt = false
+; [merge]
+;   tool =
+; [mergetool ""]
+; 	cmd = \"$BASE\" \"$LOCAL\" \"$REMOTE\" -o \"$MERGED\"
+; 	trustExitCode = true
+; To use specific email or other config for a client:
+; [includeIf "gitdir:~/Projects/client/"]
+; 	path = ~/Projects/client/.gitconfig
