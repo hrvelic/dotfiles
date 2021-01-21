@@ -35,7 +35,7 @@ fi
   # The list of segments shown on the left. Fill it with the most important segments.
   typeset -ga POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
       # =========================[ Line #1 ]=========================
-      os_icon                 # os identifier
+      #os_icon                 # os identifier
       dir                     # current directory
       vcs                     # git status
       # =========================[ Line #2 ]=========================
@@ -53,21 +53,21 @@ fi
       command_execution_time  # duration of the last command
       background_jobs         # presence of background jobs
       virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
-      anaconda                # conda environment (https://conda.io/)
-      pyenv                   # python environment (https://github.com/pyenv/pyenv)
-      nodenv                  # node.js version from nodenv (https://github.com/nodenv/nodenv)
-      nvm                     # node.js version from nvm (https://github.com/nvm-sh/nvm)
-      nodeenv                 # node.js environment (https://github.com/ekalinin/nodeenv)
+      #anaconda                # conda environment (https://conda.io/)
+      #pyenv                   # python environment (https://github.com/pyenv/pyenv)
+      #nodenv                  # node.js version from nodenv (https://github.com/nodenv/nodenv)
+      #nvm                     # node.js version from nvm (https://github.com/nvm-sh/nvm)
+      #nodeenv                 # node.js environment (https://github.com/ekalinin/nodeenv)
       # node_version          # node.js version
       # go_version            # go version (https://golang.org)
       # rust_version          # rustc version (https://www.rust-lang.org)
-      rbenv                   # ruby version from rbenv (https://github.com/rbenv/rbenv)
-      rvm                     # ruby version from rvm (https://rvm.io)
-      kubecontext             # current kubernetes context (https://kubernetes.io/)
-      terraform               # terraform workspace (https://www.terraform.io)
+      #rbenv                   # ruby version from rbenv (https://github.com/rbenv/rbenv)
+      #rvm                     # ruby version from rvm (https://rvm.io)
+      #kubecontext             # current kubernetes context (https://kubernetes.io/)
+      #terraform               # terraform workspace (https://www.terraform.io)
       context                 # user@host
-      nordvpn                 # nordvpn connection status, linux only (https://nordvpn.com/)
-      ranger                  # ranger shell (https://github.com/ranger/ranger)
+      #nordvpn                 # nordvpn connection status, linux only (https://nordvpn.com/)
+      #ranger                  # ranger shell (https://github.com/ranger/ranger)
       # =========================[ Line #2 ]=========================
       newline
       # public_ip             # public IP address
@@ -136,7 +136,7 @@ fi
   typeset -g POWERLEVEL9K_ICON_BEFORE_CONTENT=
 
   # Add an empty line before each prompt.
-  typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=false
+  typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 
   # Connect left prompt lines with these symbols. You'll probably want to use the same color
   # as POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_FOREGROUND below.
@@ -205,6 +205,9 @@ fi
   typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION='❮'
   # Prompt symbol in visual vi mode.
   typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIVIS_CONTENT_EXPANSION='Ⅴ'
+  # Prompt symbol in overwrite vi mode.
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIOWR_CONTENT_EXPANSION='▶'
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_OVERWRITE_STATE=true
   # No line terminator if prompt_char is the last segment.
   typeset -g POWERLEVEL9K_PROMPT_CHAR_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=
   # No line introducer if prompt_char is the first segment.
@@ -224,11 +227,38 @@ fi
   typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=103
   # Color of the anchor directory segments. Anchor segments are never shortened. The first
   # segment is always an anchor.
-  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=39
+  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=255
   # Display anchor directory segments in bold.
   typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=true
+  # Don't shorten directories that contain any of these files. They are anchors.
+  local anchor_files=(
+    .bzr
+    .citc
+    .git
+    .hg
+    .svn
+    .node-version
+    .python-version
+    .go-version
+    .ruby-version
+    .lua-version
+    .java-version
+    .perl-version
+    .php-version
+    .tool-version
+    .tool-versions
+    .shorten_folder_marker
+    .terraform
+    CVS
+    Cargo.toml
+    composer.json
+    go.mod
+    package.json
+    stack.yaml
+  )
   # Don't shorten directories that contain files matching this pattern. They are anchors.
-  typeset -g POWERLEVEL9K_SHORTEN_FOLDER_MARKER='(.shorten_folder_marker|.bzr|CVS|.git|.hg|.svn|.terraform|.citc)'
+  #typeset -g POWERLEVEL9K_SHORTEN_FOLDER_MARKER='(.shorten_folder_marker|.bzr|CVS|.git|.hg|.svn|.terraform|.citc)'
+  typeset -g POWERLEVEL9K_SHORTEN_FOLDER_MARKER="(${(j:|:)anchor_files})"
   # Don't shorten this many last directory segments. They are anchors.
   typeset -g POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
   # Shorten directory if it's longer than this even if there is space for it. The value can

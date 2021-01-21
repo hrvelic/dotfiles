@@ -68,7 +68,39 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+  history
+  extract
+  gitignore
+  #zsh-navigation-tools
+  #zsh-interactive-cd
+
+  # Tool CLI completion
+  asdf
+  docker-compose
+  docker
+  rsync
+
+  #VCS Completion
+  git
+  git-extras
+
+  #Erlang & Elixir
+  mix
+
+  #Clojure & Java
+  mvn
+  lein
+
+  #Rust
+  #rustup
+  #cargo
+  #rust
+
+  # Nodejs
+  npm
+  yarn
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -96,8 +128,8 @@ export EDITOR='nvim'
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# alias zshconfig="nvim ~/.zshrc"
+# alias ohmyzsh="nvim ~/.oh-my-zsh"
 
 # Zsh tries to execute it at start for some reason
 # alias loaddotenv="eval $(sed 's/^/export /' .env)"
@@ -127,6 +159,6 @@ export PATH
 . $HOME/.asdf/completions/asdf.bash
 
 # Tilix and VTE fix
-if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-        source /etc/profile.d/vte-2.91.sh
-fi
+# if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+#         source /etc/profile.d/vte-2.91.sh
+# fi
