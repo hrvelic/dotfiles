@@ -70,7 +70,7 @@ def recursively_link_files(link_directory, file_directory, shortcut_directory, v
 
 
 def install_links_to_home(target_directory, dotfiles_link_name, verbose=False):
-    print("Linking dot files in user's home directory...")
+    print("Preparing...")
     dotfiles_dir_link = path.join(home_directory, dotfiles_link_name)
     file_operations = []
     if verbose:

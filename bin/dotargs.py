@@ -1,17 +1,12 @@
-import sys
+import argparse
+
+description = "Link files into user's home directory. Existing files are backed up and already valid links are ignored."
+parser = argparse.ArgumentParser(description=description)
+parser.add_argument("path", help="Path to directory to link to")
+parser.add_argument("--test", dest="test", action="store_const", const=True, default=False,
+                    help="Don't execute any actions, only print what you are going to do.")
+parser.add_argument("--verbose", dest="verbose", action="store_const", const=True, default=False,
+                    help="Very verbose output for debugging")
 
 def parse_arguments():
-    arguments = []
-    is_test = False
-    is_verbose = False
-    for option in sys.argv[1:]:
-        if option == "--test":
-            is_test = True
-            continue
-        if option == "--verbose":
-            is_verbose = True
-            continue
-        arguments.append(option)
-
-    return arguments, {"test": is_test, "verbose": is_verbose}
-
+    return parser.parse_args()
