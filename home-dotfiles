@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-SOURCE="$( dirname "${BASH_SOURCE[0]}" )/home"
-python bin/dotinstall.py "$@" $SOURCE
+ROOT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
+python $ROOT_DIR/dotfile-manager "$@" $ROOT_DIR/home
 
