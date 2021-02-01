@@ -69,6 +69,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+  vi-mode
   history
   extract
   gitignore
@@ -150,6 +151,9 @@ if [ -d "$HOME/.cargo/bin" ] ; then
 fi
 
 export PATH
+
+#### PLUGIN Configuration
+VI_MODE_SET_CURSOR=true
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
