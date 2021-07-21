@@ -253,6 +253,7 @@ fi
     Cargo.toml
     composer.json
     go.mod
+    mix.exs
     package.json
     stack.yaml
   )

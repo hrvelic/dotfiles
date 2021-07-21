@@ -176,11 +176,13 @@ font:
 #draw_bold_text_with_bright_colors: false
 
 # Colors (Tomorrow Night)
-#colors:
+colors:
   # Default colors
-  #primary:
-  #  background: '#1d1f21'
-  #  foreground: '#c5c8c6'
+  primary:
+    #background: '#1d1f21'
+    #foreground: '#c5c8c6'
+    background: '#332f2b'
+    foreground: '#ffe9a8'
 
     # Bright and dim foreground colors
     #
@@ -249,7 +251,15 @@ font:
   #  background: CellForeground
 
   # Normal colors
-  #normal:
+  normal:
+    black:   '#332f2b'
+    red:     '#bc3f3c'
+    green:   '#95bd1d'
+    yellow:  '#e79e3c'
+    blue:    '#2a90e8'
+    magenta: '#944f9e'
+    cyan:    '#00c6cc'
+    white:   '#c0b0a0'
   #  black:   '#1d1f21'
   #  red:     '#cc6666'
   #  green:   '#b5bd68'
@@ -260,7 +270,15 @@ font:
   #  white:   '#c5c8c6'
 
   # Bright colors
-  #bright:
+  bright:
+    black:   '#5b5b5b'
+    red:     '#ff5a56'
+    green:   '#d1ff34'
+    yellow:  '#ffc490'
+    blue:    '#51d4ff'
+    magenta: '#f298ff'
+    cyan:    '#84ffec'
+    white:   '#ffd0b0'
   #  black:   '#666666'
   #  red:     '#d54e53'
   #  green:   '#b9ca4a'
