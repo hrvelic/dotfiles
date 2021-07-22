@@ -69,7 +69,6 @@ HIST_STAMPS="yyyy-mm-dd"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  vi-mode
   history
   extract
   gitignore
@@ -94,9 +93,9 @@ plugins=(
   lein
 
   #Rust
-  #rustup
-  #cargo
-  #rust
+  rustup
+  cargo
+  rust
 
   # Nodejs
   npm
@@ -153,7 +152,6 @@ fi
 export PATH
 
 #### PLUGIN Configuration
-VI_MODE_SET_CURSOR=true
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
@@ -166,3 +164,5 @@ VI_MODE_SET_CURSOR=true
 # if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
 #         source /etc/profile.d/vte-2.91.sh
 # fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

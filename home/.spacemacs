@@ -1,4 +1,3 @@
-;; -*- mode: emacs-lisp -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
@@ -44,33 +43,28 @@ values."
      git
      (ibuffer :variables
               ibuffer-group-buffers-by 'projects)
-     markdown
+     ;; markdown
      (org :variables
-          org-enable-git-support t
+          ;; org-enable-git-support t
           org-enable-reveal-js-support t)
-     racket
      search-engine
-     (shell :variables
-            shell-default-shell 'term
-            shell-default-height 30
-            shell-default-position 'bottom
-            shell-default-full-span nil)
-     shell-scripts
+     ;; (shell :variables
+     ;;        shell-default-shell 'term
+     ;;        shell-default-height 30
+     ;;        shell-default-position 'bottom
+     ;;        shell-default-full-span nil)
+     ;; shell-scripts
      spell-checking
      syntax-checking
      theming
      version-control
-     yaml
+     ;; yaml
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages
-   '(
-     (ob-racket :location
-                (recipe :fetcher github :repo "DEADB17/ob-racket"))
-     )
+   dotspacemacs-additional-packages '()
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -133,7 +127,8 @@ values."
    ;; `recents' `bookmarks' `projects' `agenda' `todos'."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
-   dotspacemacs-startup-lists '((projects . 7)
+   dotspacemacs-startup-lists '((agenda . 10)
+                                (projects . 7)
                                 (recents . 20))
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
@@ -326,6 +321,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; Define the location of the file to hold tasks
   ;; (setq org-default-notes-file "~/.default_todo.org")
 
+  (setq org-reveal-root "file://~/Library/tools/reveal.js-master")
+
   ;; THEME
   (setq-default
    theming-modifications
@@ -427,12 +424,7 @@ you should place your code here."
 
   ;; MARKDOWN
   ;; Markdown mode hook for orgtbl-mode minor mode
-  (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
-  ;; org mode: racket literal programming
-  (use-package ob-racket
-    :after org
-    :pin manual
-    :config (append `((racket . t) (scribble . t)) org-babel-load-languages))
+  ;; (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
