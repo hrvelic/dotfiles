@@ -24,6 +24,10 @@ filetype on
 filetype plugin on
 filetype indent on
 
+" -------------------------------------
+"  Neovide
+let g:neovide_cursor_vfx_mode = "railgun"
+
 " =====================================
 " Plugins
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
@@ -79,38 +83,58 @@ call plug#end()
 set bg=dark
 autocmd vimenter * ++nested colorscheme gruvbox " Enables gruvbox
 
+" Fzf
+
+let g:fzf_buffers_jump = 1 " [Buffers] Jump to the existing window if possible
+
 " =====================================
 " Keybinds
 " http://stackoverflow.com/questions/3776117/what-is-the-difference-between-the-remap-noremap-nnoremap-and-vnoremap-mapping#answer-3776182
 " http://stackoverflow.com/questions/22849386/difference-between-nnoremap-and-inoremap#answer-22849425
 
 let mapleader = " "
-nnoremap <silent> <C-PageUp> :bprevious<CR>
-nnoremap <silent> <C-PageDown> :bnext<CR>
-
+" -------------------------------------
+" Commands: <leader>:
+nnoremap <leader>:: :Commands<CR>
+nnoremap <leader>:h :History:<CR>
+" -------------------------------------
+" Help: <leader>h
+nnoremap <leader>hh :help<space>
+nnoremap <leader>ht :Helptags<CR>
+nnoremap <leader>hk :Maps<CR>
 " -------------------------------------
 " Search: <leader>/
+nnoremap <leader>/- :nohl<CR>
 nnoremap <leader>// :BLines<CR>
-nnoremap <leader>/h :nohl<CR>
+nnoremap <leader>/? :Blines<space>
+nnoremap <leader>/b :Lines<CR>
+nnoremap <leader>/B :Lines<space>
+nnoremap <leader>/h :History/<CR>
 " -------------------------------------
 " Files: <leader>f
 nnoremap <leader>ff :Files<CR>
+nnoremap <leader>fF :Files<space>
+nnoremap <leader>fr :History<CR>
+nnoremap <leader>fe :Filetypes<CR>
+nnoremap <leader>fg :Rg<space>
+nnoremap <leader>ft :NERDTreeToggle<CR>
 nnoremap <leader>fv :edit $MYVIMRC<CR>
-
 " -------------------------------------
 " Editing: <leader>e
-
 " Paste from system clipboard - not needed already using it by default
 "nnoremap <leader>ep "+p
 "nnoremap <leader>eP "+P
 " Undo Tree
 nnoremap <leader>eu :UndotreeToggle<CR>
-
+nnoremap <leader>em :Marks<CR>
 " -------------------------------------
 " Buffers: <leader>b
+nnoremap <silent> <C-PageUp> :bprevious<CR>
+nnoremap <silent> <C-PageDown> :bnext<CR>
 nnoremap <leader>bb :Buffers<CR>
 nnoremap <leader>bd :bdelete<CR>
-
+nnoremap <leader>bw :w<CR>
 " -------------------------------------
 " Windows: <leader>w
+nnoremap <leader>ww :Windows<CR>
 
