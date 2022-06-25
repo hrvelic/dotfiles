@@ -93,8 +93,6 @@ plugins=(
   lein
 
   #Rust
-  rustup
-  cargo
   rust
 
   # Nodejs
@@ -150,6 +148,9 @@ if [ -d "$HOME/.cargo/bin" ] ; then
 fi
 
 export PATH
+
+### iex configuration
+export ERL_AFLAGS="-kernel shell_history enabled"
 
 #### PLUGIN Configuration
 
